@@ -1,0 +1,7 @@
+aiogram
+colorlog
+requests
+aiohttp
+colorama
+async_class
+typing
