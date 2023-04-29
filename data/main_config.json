@@ -1,0 +1,18 @@
+{
+    "created_time": "02/15/23 -- 19:18:24",
+    "bot": {
+        "admins": [],
+        "token": "6069344142:AAEjDhSyzAN2L-Qd8a0Gy53wTCFtldAEqvs",
+        "main_admin": 5689929885
+    },
+    "logs": {
+        "main_path_logs": "data/logs/"
+    },
+    "main_db": {
+        "main_db": "./data/main_db.db"
+    },
+    "texts": {
+        "licensing_agreement_eng": "Лицензированное соглашение на английском",
+        "licensing_agreement_ru": "Лицензированное соглашение на русском "
+    }
+}
