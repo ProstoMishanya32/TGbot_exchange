@@ -38,13 +38,25 @@ class DataBase:
         lang TEXT,
         username TEXT)""")
 
-        # БД c категориями
+
         self.cur.execute(""" 
         CREATE TABLE IF NOT EXISTS 
         exchange(
         increment INTEGER PRIMARY KEY AUTOINCREMENT,
         exchange_id INTEGER,
         exchange_name TEXT)""")
+
+        self.cur.execute(""" 
+        CREATE TABLE IF NOT EXISTS 
+        exchange_recill(
+        user_id INTEGER PRIMARY KEY,
+        username TEXT,
+        bot TEXT,
+        secret_key TEXT, 
+        Api_id TEXT,
+        exchange_name TEXT)""")
+
+
 
         self.connection.commit()
         print(colorama.Fore.RED + "--- Базы данных подключены ---")
@@ -80,6 +92,11 @@ class DataBase:
     def add_exchange(self, exchange_id, exchange_name):
         self.cur.row_factory = dict_factory
         self.cur.execute("INSERT INTO exchange (exchange_id, exchange_name) VALUES (?, ?)", [exchange_id, exchange_name])
+        self.connection.commit()
+
+    def add_exchange_recill(self, user_id, username, bot, secret_key, api_id, exchange_name ):
+        self.cur.row_factory = dict_factory
+        self.cur.execute("INSERT INTO exchange_recill (user_id, username, bot, secret_key, Api_id, exchange_name) VALUES (?, ?, ?, ?, ?, ?)", [user_id, username, bot, secret_key, api_id, exchange_name])
         self.connection.commit()
 
 

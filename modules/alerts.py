@@ -28,3 +28,7 @@ async def send_admins(message, markup=None, not_me=0):
         except Exception as i:
            print(i)
 
+
+# Рассылка сообщения только главному  администратору
+async def send_main_admin(message, markup=None, not_me=0):
+    await bot.send_message(main_config.bot.main_admin, message, reply_markup=markup, disable_web_page_preview=True)

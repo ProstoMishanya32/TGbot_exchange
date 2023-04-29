@@ -24,9 +24,19 @@ async def admin_menu_start(message: Message, state: FSMContext):
 @dp.message_handler(CheckAdmin(), text= 'Создать биржу ➕', state="*")
 async def exchange_create(message: Message, state: FSMContext):
     await state.finish()
-    await message.answer("<b>Введите название для биржи</b>")
+    await message.answer("<b>Введите название для биржи или выберите ее из списка.</b>", reply_markup=inline_page.exchange_name__swipe_fp(0))
 
     await state.set_state("exchange_name")
+
+@dp.callback_query_handler(CheckAdmin(), text_startswith="name_exchange_swipe:", state="exchange_name")
+async def exchange_create_swipe(call: CallbackQuery, state: FSMContext):
+    remover = int(call.data.split(":")[1])
+
+
+    await call.message.edit_text(f"<b>Введите название для биржи или выберите ее из списка.</b>", reply_markup=inline_page.exchange_name__swipe_fp(remover))
+
+
+
 
 
 # Открытие страниц выбора категорий для редактирования
@@ -52,15 +62,34 @@ async def exchange_remove(message: Message, state: FSMContext):
 
 
 
+
+
+
 @dp.message_handler(CheckAdmin(), text= '⬅ Главное меню', state="*")
 async def exit_menu(message: Message, state: FSMContext):
     await state.finish()
-    await message.answer("<b>Добро пожаловать в Админ меню</b>", reply_markup=reply_admin.menu_admin())
+    await message.answer("<b>Добро пожаловать в Админ меню</b>", reply_markup=reply_admin.menu_admin(message.from_user.id))
 
 
 ####################################
 ########Создание категории##########
 #####################################
+
+
+@dp.callback_query_handler(CheckAdmin(), text_startswith="name_exchange_create:", state="exchange_name")
+async def exchange_create_call(call: CallbackQuery, state: FSMContext):
+    exchange = call.data.split(":")[1]
+
+    exchange_id = get_unix()
+    db.add_exchange(exchange_id, exchange)
+    await state.finish()
+
+    exchange = db.get_exchange(exchange_id=exchange_id)
+
+    await call.message.answer("➖➖➖➖<b>Биржа создана!</b>➖➖➖➖\n"
+                         f"<b>🗃 Биржа: <code>{exchange['exchange_name']}</code></b>\n"
+                         "➖➖➖➖➖➖➖➖➖➖➖➖➖➖\n", reply_markup=inline_admin.exchange_edit(exchange_id, 0))
+
 
 
 @dp.message_handler(CheckAdmin(), state="exchange_name")
@@ -88,7 +117,6 @@ async def product_exchange_edit_swipe(call: CallbackQuery, state: FSMContext):
     remover = int(call.data.split(":")[1])
 
     await call.message.edit_text("<b>Выберите биржу для изменения</b>",reply_markup=inline_page.exchange_edit_swipe_(remover))
-
 
 
 @dp.callback_query_handler(CheckAdmin(), text_startswith="exchange_edit_open:", state="*")

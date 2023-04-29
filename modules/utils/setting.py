@@ -14,6 +14,7 @@ class MainConfig(CreatingConfig):
             self.token = config.config_field(key = 'token', layer = 'bot', default = 'Здесь ваш Telegram Токен')
             self.main_admin = config.config_field(key='main_admin', layer='bot', default='Самый главный Администатор')
             self.admins = config.config_field(key = 'admins', layer = 'bot', default = [])
+            self.exchange = config.config_field(key = 'exchange', layer= 'bot', default = [])
     class Logs:
         def __init__(self, config : CreatingConfig) -> None:
             self.main_path_logs = config.config_field(key = 'main_path_logs', layer = 'logs', default = 'Путь к папке логов')

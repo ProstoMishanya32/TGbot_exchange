@@ -4,10 +4,11 @@ from modules.services import db
 from modules.utils import main_config
 
 
-def menu_admin():
+def menu_admin(user_id):
     keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
-    keyboard.row("🟠Управление биржами 🟠")
-    keyboard.row("🧑‍✈️ Администаторы", "Изменить текст лиц. соглашения")
+    if user_id == main_config.bot.main_admin:
+        keyboard.row("🟠Управление биржами 🟠", "🧑‍✈️ Администаторы")
+    keyboard.row("Изменить текст лиц. соглашения")
     keyboard.row("Выйти из Админ меню⬆️")
     return keyboard
 

@@ -14,7 +14,7 @@ from bot_telegram import bot
 
 @dp.message_handler(CheckAdmin(), text = '/admin', state = "*")
 async def admin_menu(message: Message, state: FSMContext):
-    await message.answer("<b>Добро пожаловать в Админ меню</b>", reply_markup=reply_admin.menu_admin())
+    await message.answer("<b>Добро пожаловать в Админ меню</b>", reply_markup=reply_admin.menu_admin(message.from_user.id))
 
 
 @dp.message_handler(CheckAdmin(), text = '🧑‍✈️ Администаторы', state = "*")
@@ -64,7 +64,7 @@ async def admin_delete_admin(message: Message, state: FSMContext):
 
 @dp.message_handler(CheckAdmin(), text = 'Назад в меню', state = "*")
 async def admin_exit_menu(message: Message, state: FSMContext):
-    await message.answer("<b>Добро пожаловать в Админ меню</b>", reply_markup=reply_admin.menu_admin())
+    await message.answer("<b>Добро пожаловать в Админ меню</b>", reply_markup=reply_admin.menu_admin(message.from_user.id))
 
 @dp.message_handler(CheckAdmin(), text = 'Выйти из Админ меню⬆️', state = "*")
 async def admin_exit(message: Message, state: FSMContext):
@@ -155,6 +155,6 @@ async def edit_texts_selected(message: Message, state: FSMContext):
             text_category = data['text_category']
         json_logic.update_texts(text_category, message.text)
         await state.finish()
-        await message.answer("Успешно!", reply_markup = reply_admin.menu_admin())
+        await message.answer("Успешно!", reply_markup = reply_admin.menu_admin(message.from_user.id))
 
 

